@@ -16,15 +16,20 @@ import com.ib.client.OrderState;
 import com.ib.client.SoftDollarTier;
 
 import ib.connect.client.IBConnection;
+import ib.connect.marketdata.MarketDataInterface;
 
 public class OrderController implements EWrapper {
 
 	IBConnection connection;
 	
-	public OrderController(Properties properties) {
+	private MarketDataInterface mdInterface;
+	private OrderControllerInterface orderInterface;
+	
+	public OrderController(Properties properties, MarketDataInterface mdInterface, OrderControllerInterface orderControllerInterface) {
 		EReaderSignal readerSignal = new EJavaSignal();
 		connection = new IBConnection(this, readerSignal);
-		
+		this.mdInterface = mdInterface;
+		this.orderInterface = orderControllerInterface;
 	}
 	
 	public void start() {
