@@ -1,5 +1,18 @@
 package ib.connect.marketdata;
 
-public class MarketDataController {
+import ib.connect.ApiController;
 
+public class MarketDataController implements MarketDataInterface {
+
+	private ApiController controller;
+	
+	public MarketDataController(ApiController controller) {
+		this.controller = controller;
+	}
+	
+	
+	
+	
+	
+	
 }

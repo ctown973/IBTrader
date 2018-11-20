@@ -6,14 +6,30 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import ib.connect.marketdata.MarketDataController;
+
 public class TraderGUI implements OrderControllerInterface {
 
+	
+	private MarketDataController mdController;
+	private ApiController orderController;
+	
+	public TraderGUI(Properties properties) {
+	
+		orderController = new ApiController(properties, mdController, this);
+		mdController = new MarketDataController(orderController);
+
+	}
+	
+	public void start() {
+		orderController.start();
+	}
 	
 	public static void main(String[] args) {
 		try {
 			Properties props = new Properties();
 			props.load(TraderGUI.class.getClassLoader().getResourceAsStream("ib.properties"));
-			OrderController controller = new OrderController(props);
+			TraderGUI controller = new TraderGUI(props);
 			controller.start();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

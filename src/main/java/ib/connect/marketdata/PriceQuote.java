@@ -2,10 +2,26 @@ package ib.connect.marketdata;
 
 public class PriceQuote {
 
-	private int tickerId, position, operation, side, size;
+	private int tickerId, size;
 	private double price;
 	
-	public PriceQuote(int tickerId, int position, int operation, int side, int size ) {
-		
+	public PriceQuote(int tickerId, int size, double price ) {
+		this.tickerId = tickerId;
+		this.size = size;
+		this.price = price;
 	}
+
+	public int getTickerId() {
+		return tickerId;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+	
+	
 }

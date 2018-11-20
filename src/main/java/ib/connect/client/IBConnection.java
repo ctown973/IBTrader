@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.ib.client.EClientSocket;
 import com.ib.client.EJavaSignal;
+import com.ib.client.EMessage;
 import com.ib.client.EReader;
 import com.ib.client.EReaderSignal;
 import com.ib.client.EWrapper;
@@ -39,8 +40,9 @@ public class IBConnection extends EClientSocket {
 				@Override
 				public void run() {
 					System.out.println("starting message processor thread...");
-					while (IBConnection.this.isConnected()) {
+					while (isConnected()) {
 						signal.waitForSignal();
+			
 						try {
 							reader.processMsgs();
 						} catch (IOException e) {
@@ -54,4 +56,17 @@ public class IBConnection extends EClientSocket {
 			t.start();
 		}
 	}
+
+	@Override
+	protected void sendMsg(EMessage msg) throws IOException {
+		// TODO Auto-generated method stub
+		super.sendMsg(msg);
+		
+		byte[] buf = msg.getRawData();
+		System.out.println("sendMsg: "+new String(buf, 0 ,buf.length));
+		
+	}
+	
+	
+	
 }
