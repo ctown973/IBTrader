@@ -21,7 +21,7 @@ import com.ib.client.Types.WhatToShow;
 import ib.connect.client.IBConnection;
 import ib.connect.marketdata.MarketDataInterface;
 
-public class ApiController implements EWrapper {
+public class ApiController implements EWrapper, OrderAcceptor {
 
 	IBConnection connection;
 	
@@ -374,5 +374,13 @@ public class ApiController implements EWrapper {
 		ArrayList<TagValue> realTimeBarsOption = new ArrayList<TagValue>();
 		connection.reqRealTimeBars(reqId, contract, 0, action.toString(), rthOnly, realTimeBarsOption);
 	}
+
+	@Override
+	public void sendOrder(Order order) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 
 }

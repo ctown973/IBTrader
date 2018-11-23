@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +18,7 @@ import java.util.stream.Stream;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -51,6 +54,27 @@ public class TraderPanel {
 		mainFrame = new JFrame("Trader");
 		mainFrame.setSize(450, 500);
 		mainFrame.setLayout(new BorderLayout());
+		mainFrame.addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent arg0) {}			
+			@Override
+			public void windowIconified(WindowEvent arg0) {}			
+			@Override
+			public void windowDeiconified(WindowEvent arg0) {}		
+			@Override
+			public void windowDeactivated(WindowEvent arg0) {}	
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				System.exit(0);
+			}	
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+				System.exit(0);
+			}	
+			@Override
+			public void windowActivated(WindowEvent arg0) {}
+		});
 		
 		fillTable = new FillTable();
 		fillTable.intitialize();
@@ -64,26 +88,25 @@ public class TraderPanel {
 				fillTable.setFrameVisible(true);
 			}
 		});
+		menu.add(fillTableItem);
 		
-		
+		JMenuBar bar = new JMenuBar();
+		bar.add(menu);
+		mainFrame.setJMenuBar(bar);
 		mainFrame.setVisible(true);
 	}
 	
 	private JFrame createGenericFrame(String name) {
 		JFrame fillFrame = new JFrame(name);
-		fillFrame.setSize(300, 300);
+		fillFrame.setSize(700, 300);
 		fillFrame.setLayout(new BorderLayout());
 		
 		return fillFrame;
 	}
 	
-	private JFrame addComponentToPanel(JFrame frame, JComponent piece)  {
-		
-		
-		return frame;
-	}
-	
+
 	class FillTable extends JTable implements MouseListener {
+		
 		
 		private DefaultEventTableModel<Fill> eventModel;
 		private HashSet<String> processedKeys;
@@ -152,11 +175,11 @@ public class TraderPanel {
 
 				@Override
 				public Fill setColumnValue(Fill baseObject, Object editedValue, int column) {
-					// TODO Auto-generated method stub
 					return null;
-				}
-				
+				}				
 			});
+			
+			setModel(eventModel);
 		}
 		
 		public void intitialize() {
@@ -165,6 +188,8 @@ public class TraderPanel {
 			container.setLayout(new BorderLayout());
 			JScrollPane pane = new JScrollPane(this);
 			container.add(pane, BorderLayout.CENTER);
+			frame.setLayout(new BorderLayout());
+			frame.add(container, BorderLayout.CENTER);
 		}
 		
 		public void setFrameVisible(boolean isVisible) {
@@ -172,34 +197,19 @@ public class TraderPanel {
 		}
 
 		@Override
-		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseClicked(MouseEvent e) {}
 
 		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mousePressed(MouseEvent e) {}
 
 		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseReleased(MouseEvent e) {}
 
 		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseEntered(MouseEvent e) {}
 
 		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseExited(MouseEvent e) {}
 		
 	}
 	
