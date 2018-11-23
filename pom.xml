@@ -91,9 +91,9 @@
             <version>1.4.8</version>	
         </dependency>
          <dependency>
-            <groupId>net.java.dev.glazedlists</groupId>
-            <artifactId>glazedlists_java15</artifactId>
-            <version>1.9.1</version>
+            <groupId>com.glazedlists</groupId>
+            <artifactId>glazedlists</artifactId>
+            <version>1.11.0</version>
         </dependency>
          <dependency>
             <groupId>junit</groupId>
@@ -128,7 +128,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>
         <configuration>
-          <release>10</release>
+          <release>11</release>
         </configuration>
       </plugin>
     </plugins>
