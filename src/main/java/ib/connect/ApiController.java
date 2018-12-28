@@ -19,18 +19,21 @@ import com.ib.client.TagValue;
 import com.ib.client.Types.WhatToShow;
 
 import ib.connect.client.IBConnection;
+import ib.connect.marketdata.MarketDataController;
 import ib.connect.marketdata.MarketDataInterface;
+import ib.connect.messages.MarketDataRequest;
+import ib.connect.securities.SecurityDefinition;
 
 public class ApiController implements EWrapper, OrderAcceptor {
 
 	IBConnection connection;
 	
-	private MarketDataInterface mdInterface;
+	private MarketDataController mdInterface;
 	private OrderControllerInterface orderInterface;
 	
-	static int marketDataReqId = 0;
+	static int marketDataReqId = 1000000;
 	
-	public ApiController(Properties properties, MarketDataInterface mdInterface, OrderControllerInterface orderControllerInterface) {
+	public ApiController(Properties properties, MarketDataController mdInterface, OrderControllerInterface orderControllerInterface) {
 		EReaderSignal readerSignal = new EJavaSignal();
 		connection = new IBConnection(this, readerSignal);
 		this.mdInterface = mdInterface;
@@ -43,7 +46,7 @@ public class ApiController implements EWrapper, OrderAcceptor {
 	}
 	@Override
 	public void tickPrice(int tickerId, int field, double price, int canAutoExecute) {
-		System.out.println("tickPrice: "+tickerId+ " field: "+field+" price: "+price+ " canAutoExecute: "+canAutoExecute);
+	  System.out.println("tickPrice: "+tickerId+ " field: "+field+" price: "+price+ " canAutoExecute: "+canAutoExecute);
 	}
 
 	@Override
@@ -65,7 +68,7 @@ public class ApiController implements EWrapper, OrderAcceptor {
 
 	@Override
 	public void tickString(int tickerId, int tickType, String value) {
-		System.out.println("tickString: "+tickerId+" tickType: "+tickType+ " value: "+value);
+	//	System.out.println("tickString: "+tickerId+" tickType: "+tickType+ " value: "+value);
 	}
 
 	@Override
@@ -151,6 +154,8 @@ public class ApiController implements EWrapper, OrderAcceptor {
 	@Override
 	public void updateMktDepth(int tickerId, int position, int operation, int side, double price, int size) {
 		System.out.println("updateMktDepth: "+tickerId+ " position: "+position+ " operation: "+operation+ " side: "+side+" price: "+price + " size: "+size);
+		mdInterface.onMarketDataDepthUpdate(tickerId, position, operation, side, price, size);
+	
 	}
 
 	@Override
@@ -206,8 +211,8 @@ public class ApiController implements EWrapper, OrderAcceptor {
 	@Override
 	public void realtimeBar(int reqId, long time, double open, double high, double low, double close, long volume,
 			double wap, int count) {
-		// TODO Auto-generated method stub
-
+		System.out.println("realtimeBar: "+time+ " open: "+open + " high: "+high+ " low "+low + " close "+close+ " volume "+volume+  " wap "+wap+ " count "+ count);
+		
 	}
 
 	@Override
@@ -218,8 +223,7 @@ public class ApiController implements EWrapper, OrderAcceptor {
 
 	@Override
 	public void fundamentalData(int reqId, String data) {
-		// TODO Auto-generated method stub
-
+		System.out.println("fundamental data: "+data);
 	}
 
 	@Override
@@ -230,14 +234,12 @@ public class ApiController implements EWrapper, OrderAcceptor {
 
 	@Override
 	public void tickSnapshotEnd(int reqId) {
-		// TODO Auto-generated method stub
-
+		System.out.println("tickSnapShotEnd " + reqId);
 	}
 
 	@Override
 	public void marketDataType(int reqId, int marketDataType) {
-		// TODO Auto-generated method stub
-
+		System.out.println("MarketDataType: "+marketDataType);
 	}
 
 	@Override
@@ -305,13 +307,13 @@ public class ApiController implements EWrapper, OrderAcceptor {
 
 	@Override
 	public void error(String str) {
-		System.out.println("error: "+str);
+		System.err.println("errorMsg= "+str);
+		
 	}
 
 	@Override
 	public void error(int id, int errorCode, String errorMsg) {
-		// TODO Auto-generated method stub
-
+		System.err.println("got error.  id=["+id+"] errorCode=["+errorCode+"] errorMsg= "+errorMsg);
 	}
 
 	@Override
@@ -327,27 +329,23 @@ public class ApiController implements EWrapper, OrderAcceptor {
 	@Override
 	public void positionMulti(int reqId, String account, String modelCode, Contract contract, double pos,
 			double avgCost) {
-		// TODO Auto-generated method stub
-
+		System.out.println("positionMulti: "+account+ " modelCode: "+modelCode+ " contract: "+contract.toString()+ "\n\t pos: "+pos+ " avgCost: "+avgCost);
 	}
 
 	@Override
 	public void positionMultiEnd(int reqId) {
-		// TODO Auto-generated method stub
-
+		System.out.println("position multi end: "+reqId);
 	}
 
 	@Override
 	public void accountUpdateMulti(int reqId, String account, String modelCode, String key, String value,
 			String currency) {
-		// TODO Auto-generated method stub
-
+		System.out.println("account update multi: "+account+" modelCode: "+modelCode+ " key: "+key+ " value: "+value);
 	}
 
 	@Override
 	public void accountUpdateMultiEnd(int reqId) {
-		// TODO Auto-generated method stub
-
+		System.out.println("account update end: ");
 	}
 
 	@Override
@@ -369,10 +367,21 @@ public class ApiController implements EWrapper, OrderAcceptor {
 
 	}
 	
-	public void reqRealTimeBars(Contract contract, WhatToShow action, boolean rthOnly ) {
+
+	public void reqRealTimeBars(SecurityDefinition contract, WhatToShow action, boolean rthOnly ) {
 		int reqId = ++marketDataReqId;
 		ArrayList<TagValue> realTimeBarsOption = new ArrayList<TagValue>();
-		connection.reqRealTimeBars(reqId, contract, 0, action.toString(), rthOnly, realTimeBarsOption);
+		System.out.println("sending out req for market data: "+reqId+ " contract "+contract.getContract().toString());
+//		connection.reqMktDepth(++marketDataReqId, contract.getContract(), 1, realTimeBarsOption);
+		
+		connection.reqMktData(reqId, contract.getContract(), "", false, realTimeBarsOption);
+		connection.reqMktDepth(++marketDataReqId, contract.getContract(), 1, realTimeBarsOption);
+		connection.reqRealTimeBars(reqId, contract.getContract(), 0, action.toString(), rthOnly, realTimeBarsOption);
+	}
+	
+	public void reqRealMktData(MarketDataRequest request) {
+		
+//		connection.reqMktDepth(tickerId, contract, numRows, mktDepthOptions);
 	}
 
 	@Override

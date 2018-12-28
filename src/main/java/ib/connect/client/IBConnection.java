@@ -3,6 +3,7 @@ package ib.connect.client;
 import java.io.IOException;
 
 import com.ib.client.EClientSocket;
+import com.ib.client.EClientSocketSSL;
 import com.ib.client.EJavaSignal;
 import com.ib.client.EMessage;
 import com.ib.client.EReader;
@@ -16,6 +17,7 @@ public class IBConnection extends EClientSocket {
 	
 	public IBConnection(EWrapper wrapper, EReaderSignal reader) {
 		super(wrapper, reader);
+		
 	}
 	
 	public void start (boolean isTest) {
@@ -41,6 +43,7 @@ public class IBConnection extends EClientSocket {
 				public void run() {
 					System.out.println("starting message processor thread...");
 					while (isConnected()) {
+						System.out.println("WAITING for signal ");
 						signal.waitForSignal();
 			
 						try {
@@ -50,6 +53,7 @@ public class IBConnection extends EClientSocket {
 							e.printStackTrace();
 						}
 					}
+					System.out.println("ENDING message processor thread...");
 				}
 			});
 			

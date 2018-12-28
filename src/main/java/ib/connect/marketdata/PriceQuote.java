@@ -2,17 +2,17 @@ package ib.connect.marketdata;
 
 public class PriceQuote {
 
-	private int tickerId, size;
+	private int refId, size;
 	private double price;
 	
-	public PriceQuote(int tickerId, int size, double price ) {
-		this.tickerId = tickerId;
+	public PriceQuote(int refId, int size, double price ) {
+		this.refId = refId;
 		this.size = size;
 		this.price = price;
 	}
 
-	public int getTickerId() {
-		return tickerId;
+	public int getRefId() {
+		return refId;
 	}
 
 	public int getSize() {

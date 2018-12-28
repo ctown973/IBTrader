@@ -32,6 +32,7 @@ import ca.odell.glazedlists.gui.WritableTableFormat;
 import ca.odell.glazedlists.swing.DefaultEventTableModel;
 import ib.connect.OrderAcceptor;
 import ib.connect.OrderControllerInterface;
+import ib.connect.gui.marketdata.MarketDataDetailedViewPanel;
 import ib.connect.marketdata.SubscriptionInterface;
 import ib.connect.order.Fill;
 
@@ -43,6 +44,7 @@ public class TraderPanel {
 	private OrderAcceptor orderAcceptor;
 	
 	private FillTable fillTable;
+	private MarketDataDetailedViewPanel mdView;
 	
 	public TraderPanel(SubscriptionInterface subInterface, OrderAcceptor orderAcceptor) {
 		
@@ -79,16 +81,22 @@ public class TraderPanel {
 		fillTable = new FillTable();
 		fillTable.intitialize();
 		
+		mdView = new MarketDataDetailedViewPanel(subscriptionInterface);
+		mdView.initialize();
+		
 		JMenu menu = new JMenu("Tools");
 		JMenuItem fillTableItem = new JMenuItem("Fill Table");
 		
-		fillTableItem.addActionListener( new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			
-				fillTable.setFrameVisible(true);
-			}
+		fillTableItem.addActionListener( (ActionEvent e)-> {	
+				fillTable.setFrameVisible(true);		
 		});
 		menu.add(fillTableItem);
+		
+		JMenuItem marketDataTableItem = new JMenuItem("Market Data View");
+		marketDataTableItem.addActionListener( (ActionEvent e)->{
+			mdView.setFrameVisible();
+		});
+		menu.add(marketDataTableItem);
 		
 		JMenuBar bar = new JMenuBar();
 		bar.add(menu);
@@ -103,6 +111,7 @@ public class TraderPanel {
 		
 		return fillFrame;
 	}
+
 	
 
 	class FillTable extends JTable implements MouseListener {
