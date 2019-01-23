@@ -1,6 +1,7 @@
 package ib.connect.marketdata;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import ib.connect.messages.MarketDataRequest.MDType;
@@ -16,6 +17,8 @@ public class RealTimeDepthMarketData implements DepthMarketData {
 	private Depth bidDepth, offerDepth;
 	
 	private SecurityDefinition definition;
+	
+	private List<MarketDataInterface> list = new LinkedList<>();
 	
 	public RealTimeDepthMarketData(SecurityDefinition definition, MDType type) {
 		this.definition = definition;
@@ -39,6 +42,12 @@ public class RealTimeDepthMarketData implements DepthMarketData {
 		
 	}
 	
+	@Override
+	public void notifyListeners() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public PriceQuote getOffer(int level) {
 		switch (level) {
 		case 0:

@@ -45,7 +45,7 @@ import ib.connect.order.OrderManager;
 import ib.connect.securities.SecurityDefinition;
 import ib.connect.securities.SecurityMaster;
 
-public class MarketDataTable implements /*MarketDataInterface*/ MouseListener, MouseWheelListener, Subscriber<DepthMarketData>{
+public class MarketDataTable implements MarketDataInterface, MouseListener, MouseWheelListener/*, Subscriber<DepthMarketData>*/{
 
 	
 	private JPanel panel;
@@ -66,35 +66,35 @@ public class MarketDataTable implements /*MarketDataInterface*/ MouseListener, M
 
 	
 	
-	@Override
-	public void onSubscribe(Subscription subscription) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void onNext(DepthMarketData item) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void onError(Throwable throwable) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void onComplete() {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void onSubscribe(Subscription subscription) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//
+//
+//	@Override
+//	public void onNext(DepthMarketData item) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//
+//
+//	@Override
+//	public void onError(Throwable throwable) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//
+//
+//	@Override
+//	public void onComplete() {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 
 
@@ -173,7 +173,7 @@ public class MarketDataTable implements /*MarketDataInterface*/ MouseListener, M
 
 
 
-	@Override
+//	@Override
 	public void onMarketDataDepthUpdate(DepthMarketData data) {
 		this.depthMarketData = data;
 		((AbstractTableModel)table.getModel()).fireTableDataChanged();

@@ -30,8 +30,7 @@ public class MarketDataController implements MarketDataInterface, SubscriptionIn
 	public MarketDataController(ApiController controller) {
 		this.controller = controller;
 		RealTimeDepthMarketData data = new RealTimeDepthMarketData(null, MDType.BAR);
-		Depth d = data.new Depth();
-		Observable
+		
 	}
 
 	@Override

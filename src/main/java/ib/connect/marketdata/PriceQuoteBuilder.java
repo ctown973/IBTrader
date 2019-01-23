@@ -17,14 +17,16 @@ public class PriceQuoteBuilder implements QuoteBuilder {
 	
 	@Override
 	public PriceQuote buildQuote() {
+		if (isComplete())
+			return new PriceQuote(refId, size, price);
 		
 		return null;
 	}
 
 	@Override
 	public boolean isComplete() {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return price != Double.NaN && size != 0;
 	}
 
 	@Override
