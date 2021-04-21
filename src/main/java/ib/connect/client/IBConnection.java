@@ -2,13 +2,12 @@ package ib.connect.client;
 
 import java.io.IOException;
 
-import com.ib.client.EClientSocket;
-import com.ib.client.EClientSocketSSL;
-import com.ib.client.EJavaSignal;
-import com.ib.client.EMessage;
-import com.ib.client.EReader;
-import com.ib.client.EReaderSignal;
-import com.ib.client.EWrapper;
+import ib.connect.client.network.EClientSocket;
+import ib.connect.client.network.EJavaSignal;
+import ib.connect.client.network.EMessage;
+import ib.connect.client.network.EReader;
+import ib.connect.client.network.EReaderSignal;
+import ib.connect.client.network.EWrapper;
 
 public class IBConnection extends EClientSocket {
 

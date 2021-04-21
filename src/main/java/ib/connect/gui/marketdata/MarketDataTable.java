@@ -27,11 +27,9 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import com.ib.client.Contract;
-import com.ib.client.Types.WhatToShow;
-
 import ib.connect.ConnectionVenue;
 import ib.connect.OrderAcceptor;
+import ib.connect.client.network.Types.WhatToShow;
 import ib.connect.gui.MySpinner;
 import ib.connect.gui.marketdata.MarketDataTableModel.DepthDataHeader;
 import ib.connect.marketdata.DepthMarketData;

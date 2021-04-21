@@ -1,7 +1,6 @@
 package ib.connect.securities;
 
-import com.ib.client.Contract;
-
+import ib.connect.client.network.Contract;
 import ib.connect.securities.SecurityMaster.SecurityType;
 
 public class SecurityDefinition {
@@ -41,7 +40,7 @@ public class SecurityDefinition {
 //	contract.currency("USD");
 //	//In the API side, NASDAQ is always defined as ISLAND
 //	contract.exchange("ISLAND");
-	public void buildContract() {
+	public Contract buildContract() {
 		contract = new Contract();
 	//	contract.secId(securityID);
 		contract.symbol(securityID);
@@ -56,7 +55,8 @@ public class SecurityDefinition {
 		
 		contract.currency("USD");
 		contract.exchange("SMART");
-		contract.primaryExch("ISLAND");
+//		contract.primaryExch("ISLAND");
+		return contract;
 	}
 	
 	public String getSymbol() {

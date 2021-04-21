@@ -3,7 +3,7 @@ package ib.connect.securities;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ib.client.Contract;
+import ib.connect.client.network.Contract;
 
 public class SecurityMaster {
 	

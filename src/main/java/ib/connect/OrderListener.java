@@ -1,6 +1,6 @@
 package ib.connect;
 
-import com.ib.client.Order;
+import ib.connect.client.network.Order;
 
 public interface OrderListener {
 

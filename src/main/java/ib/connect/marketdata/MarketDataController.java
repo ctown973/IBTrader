@@ -6,16 +6,15 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import com.ib.client.Contract;
-import com.ib.client.Types.WhatToShow;
 
 import ib.connect.ApiController;
+import ib.connect.client.network.Types.WhatToShow;
 import ib.connect.marketdata.RealTimeDepthMarketData.Depth;
 import ib.connect.messages.MarketDataRequest;
 import ib.connect.messages.MarketDataRequest.MDType;
 import ib.connect.securities.SecurityDefinition;
 
-public class MarketDataController implements MarketDataInterface, SubscriptionInterface {
+public class MarketDataController implements SubscriptionInterface {
 
 	private ApiController controller;
 	
@@ -39,21 +38,29 @@ public class MarketDataController implements MarketDataInterface, SubscriptionIn
 	}
 	
 	public void start() {
-		Thread t = new Thread( ()->{
-			while (true) {
-				while(queue.poll(timeout, unit));
-			}
-		}
-		);
+//		Thread t = new Thread( ()->{
+//			while (true) {
+//				while(queue.poll(timeout, unit));
+//			}
+//		}
+//		);
 	}
 
-	@Override
-	public void onMarketDataDepthUpdate(DepthMarketData data) {
-		// TODO Auto-generated method stub
+//	@Override
+//	public void onMarketDataDepthUpdate(DepthMarketData data) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+	
+	public void onMarketDataDepthUpdate(int tickerId, int position, int operation, int side, double price, int size) {
 		
 	}
 	
-	public void onMarketDataDepthUpdate(int tickerId, int position, int operation, int side, double price, int size) {
+	public void onTopLevelSizeUpdate(int ticerId, int operation, int size) {
+		
+	}
+	
+	public void onTopLevelPriceUpdate(int tickerId, int operation, double price) {
 		
 	}
 	

@@ -1,6 +1,6 @@
 package ib.connect.order;
 
-import com.ib.client.Contract;
+import ib.connect.client.network.Contract;
 
 public class OrderFactory {
 

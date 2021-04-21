@@ -4,21 +4,21 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Set;
 
-import com.ib.client.CommissionReport;
-import com.ib.client.Contract;
-import com.ib.client.ContractDetails;
-import com.ib.client.DeltaNeutralContract;
-import com.ib.client.EJavaSignal;
-import com.ib.client.EReaderSignal;
-import com.ib.client.EWrapper;
-import com.ib.client.Execution;
-import com.ib.client.Order;
-import com.ib.client.OrderState;
-import com.ib.client.SoftDollarTier;
-import com.ib.client.TagValue;
-import com.ib.client.Types.WhatToShow;
 
 import ib.connect.client.IBConnection;
+import ib.connect.client.network.CommissionReport;
+import ib.connect.client.network.Contract;
+import ib.connect.client.network.ContractDetails;
+import ib.connect.client.network.DeltaNeutralContract;
+import ib.connect.client.network.EJavaSignal;
+import ib.connect.client.network.EReaderSignal;
+import ib.connect.client.network.EWrapper;
+import ib.connect.client.network.Execution;
+import ib.connect.client.network.Order;
+import ib.connect.client.network.OrderState;
+import ib.connect.client.network.SoftDollarTier;
+import ib.connect.client.network.TagValue;
+import ib.connect.client.network.Types.WhatToShow;
 import ib.connect.marketdata.MarketDataController;
 import ib.connect.marketdata.MarketDataInterface;
 import ib.connect.messages.MarketDataRequest;
@@ -47,11 +47,14 @@ public class ApiController implements EWrapper, OrderAcceptor {
 	@Override
 	public void tickPrice(int tickerId, int field, double price, int canAutoExecute) {
 	  System.out.println("tickPrice: "+tickerId+ " field: "+field+" price: "+price+ " canAutoExecute: "+canAutoExecute);
+	  mdInterface.onTopLevelPriceUpdate(tickerId, field, price);
 	}
 
 	@Override
 	public void tickSize(int tickerId, int field, int size) {
 		System.out.println("tickSize: "+tickerId+ " field: "+field +" size: "+size);
+		
+		mdInterface.onTopLevelSizeUpdate(tickerId, field, size);
 	}
 
 	@Override
@@ -161,7 +164,7 @@ public class ApiController implements EWrapper, OrderAcceptor {
 	@Override
 	public void updateMktDepthL2(int tickerId, int position, String marketMaker, int operation, int side, double price,
 			int size) {
-		System.out.println("updateMktDepth: "+tickerId+ " position: "+position+ " operation: "+operation+ " side: "+side+" price: "+price + " size: "+size+ " marketMaker: "+marketMaker);
+		System.out.println("updateMktDepth L2: "+tickerId+ " position: "+position+ " operation: "+operation+ " side: "+side+" price: "+price + " size: "+size+ " marketMaker: "+marketMaker);
 		
 	}
 

@@ -3,9 +3,9 @@ package ib.connect.marketdata;
 public class MarketDataIncrementalRefresh {
   
 	
-	enum MDAction {ADD, CHANGE, DELETE};
+	 enum MDAction {ADD, CHANGE, DELETE};
 	
-	enum MDUpdate {BID, OFFER, TRADE};
+	 enum MDUpdate {BID, OFFER, TRADE};
 	
 	private MDAction action;
 	private MDUpdate update;

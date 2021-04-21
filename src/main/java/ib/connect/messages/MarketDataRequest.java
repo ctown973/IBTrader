@@ -1,6 +1,6 @@
 package ib.connect.messages;
 
-import com.ib.client.Contract;
+import ib.connect.client.network.Contract;
 
 public class MarketDataRequest {
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import ib.connect.marketdata.MarketDataIncrementalRefresh.MDAction;
 import ib.connect.messages.MarketDataRequest.MDType;
 import ib.connect.securities.SecurityDefinition;
 
@@ -20,12 +21,16 @@ public class RealTimeDepthMarketData implements DepthMarketData {
 	
 	private List<MarketDataInterface> list = new LinkedList<>();
 	
+	private RealTimeQuoteBuilder builder;
+	
 	public RealTimeDepthMarketData(SecurityDefinition definition, MDType type) {
 		this.definition = definition;
 		this.type = type;
 		if (this.type == MDType.REALTIME_LEVEL_II) {
 			this.bidDepth = new Depth();
 			this.offerDepth  = new Depth();
+		} else if (this.type == MDType.REALTIME_TOP) {
+			builder = new RealTimeQuoteBuilder();
 		}
 	}
 	
@@ -45,6 +50,10 @@ public class RealTimeDepthMarketData implements DepthMarketData {
 	@Override
 	public void notifyListeners() {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	public void addTopPrice(MDAction action, double price) {
 		
 	}
 
@@ -86,12 +95,18 @@ public class RealTimeDepthMarketData implements DepthMarketData {
 		private int refId;
 		private int size = 0;
 		private double price = Double.NaN;
+		
+		private PriceQuote bidTop, offerTop;
 		@Override
 		public PriceQuote buildQuote() {
 			if (size != 0 && !Double.isNaN(price)) {
 				return new PriceQuote(refId, size, price);
 			}
 			return null;
+		}
+		
+		public void setPrice(double price) {
+			
 		}
 
 		@Override

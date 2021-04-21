@@ -6,20 +6,18 @@ import java.util.Map;
 public class OrderManager {
 
 	private static Map<String, OrderBook> orderMap;
-	private static OrderManager orderManager;
+	private static final OrderManager orderManager;
+	
+	
+	static {
+		orderManager = new OrderManager();
+	}
 	
 	private OrderManager() {
 		orderMap = new HashMap<String, OrderBook>();
 	}
 	
-	public static OrderManager initializeOrderManager() {
-		if (orderManager == null) {
-			synchronized(OrderManager.class) {
-				if (orderManager == null)
-					orderManager = new OrderManager();
-		
-			}
-		}
+	public static OrderManager getOrderManager() {
 		return orderManager;
 	}
 	
@@ -30,6 +28,6 @@ public class OrderManager {
 	
 	public static OrderBook getOrderBook(String securityId) {
 		if (securityId == null) return null;
-		return initializeOrderManager().get(securityId);
+		return getOrderManager().get(securityId);
 	}
 }
